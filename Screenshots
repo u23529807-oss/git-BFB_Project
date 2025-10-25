@@ -1,8 +1,12 @@
-### Procurement Dashboard
-![Dashboard](Screenshots/Dashboard.png)
+# BFB Screenshots
 
-### Supplier Delivery Portal
-![Supplier View](Screenshots/SupplierView.png)
+The following screenshots showcase key features of the BFB Project:
 
-### Site Inventory
-![Site Manager View](Screenshots/SiteManager.png)
+## Procurement Dashboard
+![Procurement Dashboard](dashboard.png)
+
+## Supplier Delivery Portal  
+![Supplier Portal](supplier-view.png)
+
+## Site Inventory
+![Site Inventory](site-manager-view.png)
