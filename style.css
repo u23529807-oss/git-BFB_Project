@@ -1,3 +1,20 @@
-/* style.css */
+/* style.css — small, purposeful polish */
+:root {
+  --focus-ring: 0 0 0 .25rem rgba(13, 110, 253, .25); /* bootstrap primary focus */
+}
+
 .kpi .display-6 { line-height: 1; }
 .card-title { font-weight: 600; }
+
+.btn:focus, .form-control:focus, .navbar-toggler:focus, .nav-link:focus {
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+.badge { user-select: none; }
+.table tbody tr:hover td { background: rgba(0,0,0,.015); }
+
+.navbar .nav-link.active {
+  text-decoration: underline;
+  text-underline-offset: .25rem;
+}

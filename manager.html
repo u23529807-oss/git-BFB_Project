@@ -4,22 +4,23 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Site Inventory</title>
+  <meta name="description" content="Live stock levels with Low/Reorder indicators across sites." />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="style.css" rel="stylesheet" />
 </head>
 <body class="bg-light">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main">
     <div class="container">
       <a class="navbar-brand" href="index.html">BFB Supply Portal</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div id="nav" class="collapse navbar-collapse">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
           <li class="nav-item"><a class="nav-link" href="supplier.html">Orders</a></li>
-          <li class="nav-item"><a class="nav-link active" href="manager.html">Inventory</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Reports</a></li>
+          <li class="nav-item"><a class="nav-link" href="manager.html">Inventory</a></li>
+          <li class="nav-item"><a class="nav-link" href="reports.html">Reports</a></li>
         </ul>
       </div>
     </div>
@@ -27,35 +28,8 @@
 
   <main class="container my-5">
     <h3 class="mb-4">Site Inventory</h3>
-
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-body">
-            <h6 class="card-title">Cement Bags</h6>
-            <p class="mb-1">In stock: <strong>80</strong></p>
-            <span class="badge bg-success">OK</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-body">
-            <h6 class="card-title">Bricks</h6>
-            <p class="mb-1">In stock: <strong>0</strong></p>
-            <span class="badge bg-danger">Reorder</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card shadow-sm h-100">
-          <div class="card-body">
-            <h6 class="card-title">Paint (20L)</h6>
-            <p class="mb-1">In stock: <strong>14</strong></p>
-            <span class="badge bg-warning text-dark">Low</span>
-          </div>
-        </div>
-      </div>
+    <div id="inventory-grid" class="row g-4">
+      <noscript><p class="text-muted">Enable JavaScript to view live inventory cards.</p></noscript>
     </div>
   </main>
 
@@ -63,5 +37,6 @@
     <div class="container small text-center text-muted">© 2025 DeWalt Construction</div>
   </footer>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
