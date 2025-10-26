@@ -1,4 +1,5 @@
 # BFB Supply Portal
+
 [![Live Demo](https://img.shields.io/badge/🔗_View-Live_Demo-blue?style=for-the-badge)](https://u23529807-oss.github.io/git-BFB_Project/)
 
 A simple web-based **construction materials and supply management system** built with HTML, Bootstrap, and JavaScript (using LocalStorage for persistence).
@@ -10,11 +11,13 @@ This project forms part of the **BFB321 Web Application Development module** and
 ## 🚀 Features
 
 ### 🏠 Dashboard
+
 - Displays live KPIs: **Active Orders**, **Deliveries in Transit**, and **Low-Stock Items**.  
 - Shows all current orders as cards with material name, supplier, ETA, and delivery status.  
 - Includes a **Bootstrap Add Order Modal** to quickly log new orders, instantly updating all pages.
 
 ### 🚚 Orders (Supplier Portal)
+
 - View and update delivery information for all orders.  
 - Mark orders as **Delivered** or update **ETAs** with one click.  
 - Automatically refreshes dashboard and reports when changes occur.  
@@ -25,6 +28,7 @@ This project forms part of the **BFB321 Web Application Development module** and
   - ⚫ Delivered  
 
 ### 📦 Inventory Management
+
 - Displays all materials with stock quantities and alert thresholds.  
 - Color-coded badges:
   - 🟢 OK — stock sufficient  
@@ -33,6 +37,7 @@ This project forms part of the **BFB321 Web Application Development module** and
 - Data automatically updates when quantities are changed or reset.
 
 ### 📊 Reports & Analytics
+
 - Dynamic visual dashboards powered by **Chart.js**.  
 - Automatically updates charts when orders or inventory data changes.  
 - Three key charts:
@@ -41,6 +46,7 @@ This project forms part of the **BFB321 Web Application Development module** and
   3. **Deliveries by Status** — real-time order tracking
 
 ### 💾 Local Storage Persistence
+
 - All data stored in browser **LocalStorage** (`bfb_supply_data_v1`) for offline access.  
 - Automatically syncs across all pages.  
 - Self-healing migration if schema changes or storage resets.
@@ -148,12 +154,12 @@ To work offline, download Chart.js and update the script path in reports.html.
 While this version runs purely in the browser, it can easily connect to a small backend (e.g., Flask + SQLite) for long-term data storage.
 
 Example Tables
-Table	Description
-sites	Construction sites and their statuses (Working / WIP)
-suppliers	Supplier info and contact details
-materials	Material catalog with SKU and category
-inventory	Tracks stock quantities and thresholds
-orders	Links suppliers, materials, ETAs, and delivery statuses
+Table Description
+sites Construction sites and their statuses (Working / WIP)
+suppliers Supplier info and contact details
+materials Material catalog with SKU and category
+inventory Tracks stock quantities and thresholds
+orders Links suppliers, materials, ETAs, and delivery statuses
 
 Example Schema (SQLite)
 sql
