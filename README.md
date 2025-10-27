@@ -8,15 +8,15 @@ This project forms part of the **BFB321 Web Application Development module** and
 
 ---
 
-## 🚀 Features
+## Features
 
-### 🏠 Dashboard
+## Dashboard
 
 - Displays live KPIs: **Active Orders**, **Deliveries in Transit**, and **Low-Stock Items**.  
 - Shows all current orders as cards with material name, supplier, ETA, and delivery status.  
 - Includes a **Bootstrap Add Order Modal** to quickly log new orders, instantly updating all pages.
 
-### 🚚 Orders (Supplier Portal)
+## Orders (Supplier Portal)
 
 - View and update delivery information for all orders.  
 - Mark orders as **Delivered** or update **ETAs** with one click.  
@@ -27,7 +27,7 @@ This project forms part of the **BFB321 Web Application Development module** and
   - 🔴 Delayed  
   - ⚫ Delivered  
 
-### 📦 Inventory Management
+## Inventory Management
 
 - Displays all materials with stock quantities and alert thresholds.  
 - Color-coded badges:
@@ -36,7 +36,7 @@ This project forms part of the **BFB321 Web Application Development module** and
   - 🔴 Reorder — stock depleted  
 - Data automatically updates when quantities are changed or reset.
 
-### 📊 Reports & Analytics
+## Reports & Analytics
 
 - Dynamic visual dashboards powered by **Chart.js**.  
 - Automatically updates charts when orders or inventory data changes.  
@@ -45,7 +45,7 @@ This project forms part of the **BFB321 Web Application Development module** and
   2. **Inventory Health** — stock distribution  
   3. **Deliveries by Status** — real-time order tracking
 
-### 💾 Local Storage Persistence
+## Local Storage Persistence
 
 - All data stored in browser **LocalStorage** (`bfb_supply_data_v1`) for offline access.  
 - Automatically syncs across all pages.  
@@ -53,9 +53,9 @@ This project forms part of the **BFB321 Web Application Development module** and
 
 ---
 
-## ⚙️ Project Setup
+##  Project Setup
 
-### Using Local Files
+## Using Local Files
 
 1. Download or clone the project folder to your computer.  
 2. Open `index.html` directly in your web browser.  
@@ -92,13 +92,11 @@ All app data is stored in LocalStorage in this structure:
 }
 ```
 
-Data Relationships
+## Data Relationships
+
 Buildings → Used in the Buildings (Working vs WIP) chart.
-
 Orders → Drives KPIs, Supplier table, and Delivery Status chart.
-
 Inventory → Used for stock levels and Inventory Health chart.
-
 If data becomes corrupted or blank, delete the key bfb_supply_data_v1 in your browser’s LocalStorage and refresh the page to reset.
 
 ## File Structure
@@ -116,6 +114,7 @@ If data becomes corrupted or blank, delete the key bfb_supply_data_v1 in your br
 └── README.md            # Project documentation
 All pages share a single navigation bar and connect to one data source (app.js).
 ```
+
 ## Usage Flow
   1.Add a New Order – Click “+ Add Order” on the dashboard to create an order.
   2.View & Update Orders – In the Supplier page, mark orders as delivered or change ETAs.
@@ -140,8 +139,6 @@ The BFB Supply Portal runs on all modern browsers that support HTML5 and CSS3:
 - Mozilla Firefox 88+
 - Apple Safari 14+
 
-If charts don’t appear on the Reports page, ensure you’re connected to the internet so Chart.js can load from the CDN.
-To work offline, download Chart.js and update the script path in reports.html.
 
 ## Optional Backend (Future Expansion)
 While this version runs purely in the browser, it can easily connect to a small backend (e.g., Flask + SQLite) for long-term data storage.
@@ -241,5 +238,6 @@ erDiagram
     buildings ||--o{ orders : "receives"
     orders ||--o{ inventory : "uses"
 ```
+
 
 
