@@ -57,6 +57,10 @@ git-BFB_Project
 
  ```
 
+## Impact & Sustainability
+
+This web application shows how a nimble, browser-based application can improve visibility and coordination in a construction supply chain. By concentrating orders, stock signals (OK/Low/Reorder), and delivery status into a single interface, it reduces delays due to miscommunication and manual follow-ups, while preventing stockouts or excess holdings. The design has excellent scalability;  a small SQLite/MySQL backend is provided (schema included) to allow multi-site and role-based access, but the front-end is responsive and device-friendly for on-site use. Over time, the same structure supports IoT integration (sensor-based stock), ETA risk alerts, and scheduled notifications for proactive, sustainable operations.
+
 ## Data Model (ERD)
 
 ```mermaid
@@ -103,8 +107,5 @@ erDiagram
     }
  
 
-## Impact & Sustainability
-
-This web application shows how a nimble, browser-based application can improve visibility and coordination in a construction supply chain. By concentrating orders, stock signals (OK/Low/Reorder), and delivery status into a single interface, it reduces delays due to miscommunication and manual follow-ups, while preventing stockouts or excess holdings. The design has excellent scalability;  a small SQLite/MySQL backend is provided (schema included) to allow multi-site and role-based access, but the front-end is responsive and device-friendly for on-site use. Over time, the same structure supports IoT integration (sensor-based stock), ETA risk alerts, and scheduled notifications for proactive, sustainable operations.
 
 
