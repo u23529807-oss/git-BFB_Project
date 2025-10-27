@@ -2,8 +2,15 @@
 
 <p align = "center" >
   <strong> University of Pretoria • Module BFB321 — Web App Development </strong><br>
-  <em> Lightweight browser-based construction supply chain platform </em>
 </p>
+
+---
+
+## Group Members
+
+| Name | Student Number |
+|------|----------------|
+| [Janco van der Walt] | [u23529807] |
 
 ---
 
