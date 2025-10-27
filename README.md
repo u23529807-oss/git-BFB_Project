@@ -102,15 +102,3 @@ erDiagram
       DATE delivered_at
     }
 
-SITES (site_id PK)            SUPPLIERS (supplier_id PK)      MATERIALS (material_id PK)
-└─ site_name                  └─ name                         └─ name
-└─ status (Working|WIP)       └─ email                        └─ sku
-                              └─ phone                        └─ category
-
-INVENTORY (inventory_id PK)   ORDERS (order_id PK)
-└─ material_id FK --------┐   └─ material_id FK ------┐
-└─ qty                    ├──>└─ supplier_id FK ----┐ ├──>  SUPPLIERS.supplier_id
-└─ low_threshold          │   └─ eta                │ │
-                          │   └─ status             │ │
-MATERIALS.material_id <---┘   └─ delivered_at       │ │
-                                                     └────>  MATERIALS.material_id
