@@ -9,14 +9,13 @@
 
 ## Overview
 
-The BFB321 Supply Chain Management Web App streamlines coordination across construction projects by giving managers real-time visibility into:
+The BFB321 Supply Chain Management Web Application improves coordination on construction projects by providing management real-time visibility into:
 
-- Material orders and suppliers  
-- Inventory health (OK / Low / Reorder)  
-- Delivery progress and ETAs  
+- Material orders and suppliers
+- Inventory health (OK / LOW / ORDER)
+- Delivery progress and ETAs
 - Building sites (Working / WIP)
-
-Built entirely with HTML, Bootstrap, JavaScript, and Chart.js, the app stores data locally using LocalStorage for instant, persistent demo use.
+The application has been fully developed using HTML, Bootstrap, JavaScript and Chart.js and uses LocalStorage to store data locally for instant and persistent demo usage.
 
 ---
 
@@ -56,10 +55,6 @@ git-BFB_Project
  ┗  README.md          → Documentation
 
  ```
-
-## Impact & Sustainability
-
-This web application shows how a nimble, browser-based application can improve visibility and coordination in a construction supply chain. By concentrating orders, stock signals (OK/Low/Reorder), and delivery status into a single interface, it reduces delays due to miscommunication and manual follow-ups, while preventing stockouts or excess holdings. The design has excellent scalability;  a small SQLite/MySQL backend is provided (schema included) to allow multi-site and role-based access, but the front-end is responsive and device-friendly for on-site use. Over time, the same structure supports IoT integration (sensor-based stock), ETA risk alerts, and scheduled notifications for proactive, sustainable operations.
 
 ## Data Model (ERD)
 
@@ -105,7 +100,8 @@ erDiagram
       STRING status
       DATE delivered_at
     }
- 
+```
 
+## Impact & Sustainability
 
-
+This web application shows how a nimble, browser-based application can improve visibility and coordination in a construction supply chain. By concentrating orders, stock signals (OK/Low/Reorder), and delivery status into a single interface, it reduces delays due to miscommunication and manual follow-ups, while preventing stockouts or excess holdings. The design has excellent scalability;  a small SQLite/MySQL backend is provided (schema included) to allow multi-site and role-based access, but the front-end is responsive and device-friendly for on-site use. Over time, the same structure supports IoT integration (sensor-based stock), ETA risk alerts, and scheduled notifications for proactive, sustainable operations.
