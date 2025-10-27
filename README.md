@@ -1,4 +1,4 @@
-<h1 align="center">🏗️ BFB321 Supply Chain Management Web Application</h1>
+<h1 align="center"> BFB321 Supply Chain Management Web Application</h1>
 
 <p align="center">
   <strong>University of Pretoria • Module BFB321 — Web App Development</strong><br>
@@ -56,3 +56,61 @@ git-BFB_Project
  ┗  README.md          → Documentation
 
  ``` 
+
+ ## Data Model (ERD)
+
+```mermaid
+erDiagram
+    SITES ||--o{ ORDERS : "receives"
+    SUPPLIERS ||--o{ ORDERS : "fulfills"
+    MATERIALS ||--o{ ORDERS : "is ordered as"
+    MATERIALS ||--o{ INVENTORY : "stocked as"
+
+    SITES {
+      int site_id PK
+      string site_name
+      enum status  "Working | WIP"
+    }
+
+    SUPPLIERS {
+      int supplier_id PK
+      string name
+      string email
+      string phone
+    }
+
+    MATERIALS {
+      int material_id PK
+      string name
+      string sku
+      string category
+    }
+
+    INVENTORY {
+      int inventory_id PK
+      int material_id FK
+      int qty
+      int low_threshold
+    }
+
+    ORDERS {
+      int order_id PK
+      int material_id FK
+      int supplier_id FK
+      date eta
+      enum status  "Scheduled | In Transit | Delayed | Delivered"
+      date delivered_at
+    }
+
+SITES (site_id PK)            SUPPLIERS (supplier_id PK)      MATERIALS (material_id PK)
+└─ site_name                  └─ name                         └─ name
+└─ status (Working|WIP)       └─ email                        └─ sku
+                              └─ phone                        └─ category
+
+INVENTORY (inventory_id PK)   ORDERS (order_id PK)
+└─ material_id FK --------┐   └─ material_id FK ------┐
+└─ qty                    ├──>└─ supplier_id FK ----┐ ├──>  SUPPLIERS.supplier_id
+└─ low_threshold          │   └─ eta                │ │
+                          │   └─ status             │ │
+MATERIALS.material_id <---┘   └─ delivered_at       │ │
+                                                     └────>  MATERIALS.material_id
