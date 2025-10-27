@@ -55,51 +55,51 @@ git-BFB_Project
  ┣  schema.sql         → Database schema (optional backend)
  ┗  README.md          → Documentation
 
- ``` 
+ ```
 
- ## Data Model (ERD)
+## Data Model (ERD)
 
 ```mermaid
 erDiagram
-    SITES ||--o{ ORDERS : "receives"
-    SUPPLIERS ||--o{ ORDERS : "fulfills"
-    MATERIALS ||--o{ ORDERS : "is ordered as"
-    MATERIALS ||--o{ INVENTORY : "stocked as"
+    SITES ||--o{ ORDERS : receives
+    SUPPLIERS ||--o{ ORDERS : fulfills
+    MATERIALS ||--o{ ORDERS : item
+    MATERIALS ||--o{ INVENTORY : stocked_as
 
     SITES {
-      int site_id PK
-      string site_name
-      enum status  "Working | WIP"
+      INT site_id PK
+      STRING site_name
+      STRING status
     }
 
     SUPPLIERS {
-      int supplier_id PK
-      string name
-      string email
-      string phone
+      INT supplier_id PK
+      STRING name
+      STRING email
+      STRING phone
     }
 
     MATERIALS {
-      int material_id PK
-      string name
-      string sku
-      string category
+      INT material_id PK
+      STRING name
+      STRING sku
+      STRING category
     }
 
     INVENTORY {
-      int inventory_id PK
-      int material_id FK
-      int qty
-      int low_threshold
+      INT inventory_id PK
+      INT material_id FK
+      INT qty
+      INT low_threshold
     }
 
     ORDERS {
-      int order_id PK
-      int material_id FK
-      int supplier_id FK
-      date eta
-      enum status  "Scheduled | In Transit | Delayed | Delivered"
-      date delivered_at
+      INT order_id PK
+      INT material_id FK
+      INT supplier_id FK
+      DATE eta
+      STRING status
+      DATE delivered_at
     }
 
 SITES (site_id PK)            SUPPLIERS (supplier_id PK)      MATERIALS (material_id PK)
