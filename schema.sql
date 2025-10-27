@@ -1,75 +1,122 @@
--- schema.sql — BFB Supply Portal (SQLite/MySQL compatible)
+-- ==========================================================
+-- BFB321 Supply Chain Management Database Schema
+-- University of Pretoria | Web App Development Project
+-- ==========================================================
 
--- Sites (buildings)
+PRAGMA foreign_keys = ON;
+
+-- =============================
+-- 1. Sites
+-- =============================
 CREATE TABLE IF NOT EXISTS sites (
-  site_id      INTEGER PRIMARY KEY,
-  site_name    TEXT NOT NULL,
-  status       TEXT CHECK(status IN ('Working','WIP')) DEFAULT 'WIP'
+    site_id       INTEGER PRIMARY KEY AUTOINCREMENT,
+    site_name     TEXT NOT NULL,
+    status        TEXT CHECK(status IN ('Working', 'WIP')) DEFAULT 'Working',
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Suppliers
+-- =============================
+-- 2. Suppliers
+-- =============================
 CREATE TABLE IF NOT EXISTS suppliers (
-  supplier_id  INTEGER PRIMARY KEY,
-  name         TEXT NOT NULL,
-  email        TEXT,
-  phone        TEXT
+    supplier_id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    name          TEXT NOT NULL,
+    email         TEXT,
+    phone         TEXT,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Materials
+-- Index for fast lookup by name or phone
+CREATE INDEX IF NOT EXISTS idx_suppliers_name ON suppliers(name);
+CREATE INDEX IF NOT EXISTS idx_suppliers_phone ON suppliers(phone);
+
+-- =============================
+-- 3. Materials
+-- =============================
 CREATE TABLE IF NOT EXISTS materials (
-  material_id  INTEGER PRIMARY KEY,
-  name         TEXT NOT NULL,
-  sku          TEXT UNIQUE,
-  category     TEXT
+    material_id   INTEGER PRIMARY KEY AUTOINCREMENT,
+    name          TEXT NOT NULL,
+    sku           TEXT UNIQUE,
+    category      TEXT,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Inventory (by material; extend with site_id for multi-site later)
+-- Fast SKU and category searches
+CREATE INDEX IF NOT EXISTS idx_materials_sku ON materials(sku);
+CREATE INDEX IF NOT EXISTS idx_materials_category ON materials(category);
+
+-- =============================
+-- 4. Inventory
+-- =============================
 CREATE TABLE IF NOT EXISTS inventory (
-  inventory_id   INTEGER PRIMARY KEY,
-  material_id    INTEGER NOT NULL REFERENCES materials(material_id),
-  qty            INTEGER DEFAULT 0,
-  low_threshold  INTEGER DEFAULT 10
+    inventory_id  INTEGER PRIMARY KEY AUTOINCREMENT,
+    material_id   INTEGER NOT NULL,
+    qty           INTEGER DEFAULT 0,
+    low_threshold INTEGER DEFAULT 10,
+    site_id       INTEGER,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(material_id) REFERENCES materials(material_id) ON DELETE CASCADE,
+    FOREIGN KEY(site_id) REFERENCES sites(site_id) ON DELETE SET NULL
 );
 
--- Orders: link material + supplier (extend with site_id for routing)
+-- Common query optimization
+CREATE INDEX IF NOT EXISTS idx_inventory_material_id ON inventory(material_id);
+CREATE INDEX IF NOT EXISTS idx_inventory_qty_threshold ON inventory(qty, low_threshold);
+
+-- =============================
+-- 5. Orders
+-- =============================
 CREATE TABLE IF NOT EXISTS orders (
-  order_id     INTEGER PRIMARY KEY,
-  material_id  INTEGER NOT NULL REFERENCES materials(material_id),
-  supplier_id  INTEGER NOT NULL REFERENCES suppliers(supplier_id),
-  eta          DATE,
-  status       TEXT CHECK(status IN ('Scheduled','In Transit','Delayed','Delivered')) DEFAULT 'Scheduled',
-  delivered_at DATE
+    order_id      INTEGER PRIMARY KEY AUTOINCREMENT,
+    material_id   INTEGER NOT NULL,
+    supplier_id   INTEGER NOT NULL,
+    site_id       INTEGER,
+    eta           DATE NOT NULL,
+    status        TEXT CHECK(status IN ('Scheduled', 'In Transit', 'Delayed', 'Delivered')) DEFAULT 'Scheduled',
+    delivered_at  DATE,
+    delay_reason  TEXT,
+    created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(material_id) REFERENCES materials(material_id) ON DELETE CASCADE,
+    FOREIGN KEY(supplier_id) REFERENCES suppliers(supplier_id) ON DELETE CASCADE,
+    FOREIGN KEY(site_id) REFERENCES sites(site_id) ON DELETE SET NULL
 );
 
--- Helpful indexes
-CREATE INDEX IF NOT EXISTS idx_sites_status      ON sites(status);
-CREATE INDEX IF NOT EXISTS idx_inventory_q_low   ON inventory(qty, low_threshold);
-CREATE INDEX IF NOT EXISTS idx_orders_status     ON orders(status);
-CREATE INDEX IF NOT EXISTS idx_orders_eta        ON orders(eta);
+-- Composite and status-based indexes
+CREATE INDEX IF NOT EXISTS idx_orders_status_eta ON orders(status, eta);
+CREATE INDEX IF NOT EXISTS idx_orders_supplier ON orders(supplier_id);
+CREATE INDEX IF NOT EXISTS idx_orders_material ON orders(material_id);
 
--- ----- Seed demo data -----
-INSERT INTO sites (site_id, site_name, status) VALUES
-  (1,'Site Alpha','Working'),
-  (2,'Site Bravo','WIP'),
-  (3,'Site Charlie','Working'),
-  (4,'Site Delta','WIP');
+-- ==========================================================
+-- Seed Data
+-- ==========================================================
+INSERT INTO sites (site_name, status)
+VALUES ('Site Alpha', 'Working'),
+       ('Site Bravo', 'WIP'),
+       ('Site Charlie', 'Working'),
+       ('Site Delta', 'WIP');
 
-INSERT INTO suppliers (supplier_id, name, email, phone) VALUES
-  (1,'BuildPro','dispatch@buildpro.co.za','+27 10 555 001'),
-  (2,'BrickWorks','bookings@brickworks.co.za','+27 11 555 002'),
-  (3,'Timber SA','orders@timbersa.co.za','+27 12 555 003');
+INSERT INTO suppliers (name, email, phone)
+VALUES ('BuildPro', 'info@buildpro.co.za', '+27 11 456 7890'),
+       ('BrickWorks', 'sales@brickworks.co.za', '+27 21 987 6543'),
+       ('Timber SA', 'orders@timbersa.co.za', '+27 12 345 6789');
 
-INSERT INTO materials (material_id, name, sku, category) VALUES
-  (1,'Cement Bags','CEM-50KG','Cement'),
-  (2,'Bricks Pallet','BRK-PAL','Masonry'),
-  (3,'Paint (20L)','PNT-20L','Finishes');
+INSERT INTO materials (name, sku, category)
+VALUES ('Cement Bags', 'CEM-001', 'Building'),
+       ('Bricks Pallet', 'BRK-001', 'Building'),
+       ('Timber Trusses', 'TIM-001', 'Roofing'),
+       ('Paint (20L)', 'PNT-001', 'Finishing');
 
-INSERT INTO inventory (inventory_id, material_id, qty, low_threshold) VALUES
-  (1,1,80,30),
-  (2,2,0,50),
-  (3,3,14,20);
+INSERT INTO inventory (material_id, qty, low_threshold, site_id)
+VALUES (1, 80, 30, 1),
+       (2, 0, 50, 1),
+       (3, 14, 20, 2);
 
-INSERT INTO orders (order_id, material_id, supplier_id, eta, status) VALUES
-  (12,1,1,'2025-10-25','In Transit'),
-  (13,2,2,'2025-10-27','Scheduled'),
-  (14,3,3,'2025-10-24','Delayed');
+INSERT INTO orders (material_id, supplier_id, site_id, eta, status, delay_reason)
+VALUES (1, 1, 1, '2025-10-25', 'In Transit', NULL),
+       (2, 2, 1, '2025-10-27', 'Scheduled', NULL),
+       (3, 3, 2, '2025-10-24', 'Delayed', 'Supplier backlog');
