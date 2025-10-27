@@ -1,65 +1,65 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang = "en" data-bs-theme = "dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset = "utf-8" />
+  <meta name = "viewport" content = "width=device-width, initial-scale=1" />
   <title>Supplier Delivery Portal</title>
-  <meta name="description" content="Update delivery status and ETA for construction material orders." />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet" />
+  <meta name = "description" content = "Update delivery status and ETA for construction material orders." />
+  <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel = "stylesheet">
+  <link href = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel = "stylesheet">
+  <link href = "style.css" rel = "stylesheet" />
 </head>
-<body class="bg-light">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main">
-    <div class="container">
-      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-        <i class="bi bi-box-seam"></i> BFB Supply Portal
+<body class = "bg-light">
+  <nav class = "navbar navbar-expand-lg navbar-dark bg-primary" aria-label = "Main">
+    <div class = "container">
+      <a class = "navbar-brand d-flex align-items-center gap-2" href = "index.html">
+        <i class = "bi bi-box-seam"></i> BFB Supply Portal
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class = "navbar-toggler" type = "button" data-bs-toggle = "collapse" data-bs-target = "#nav" aria-controls = "nav" aria-expanded = "false" aria-label = "Toggle navigation">
+        <span class = "navbar-toggler-icon"></span>
       </button>
-      <div id="nav" class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="supplier.html">Orders</a></li>
-          <li class="nav-item"><a class="nav-link" href="manager.html">Inventory</a></li>
-          <li class="nav-item"><a class="nav-link" href="reports.html">Reports</a></li>
+      <div id = "nav" class = "collapse navbar-collapse">
+        <ul class = "navbar-nav ms-auto">
+          <li class = "nav-item"><a class = "nav-link" href = "index.html">Dashboard</a></li>
+          <li class = "nav-item"><a class = "nav-link" href = "supplier.html">Orders</a></li>
+          <li class = "nav-item"><a class = "nav-link" href = "manager.html">Inventory</a></li>
+          <li class = "nav-item"><a class = "nav-link" href = "reports.html">Reports</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
-  <main class="container my-5">
-    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
-      <h3 class="mb-0">Supplier Delivery Portal</h3>
-      <div class="input-group" style="max-width: 320px;">
-        <span class="input-group-text"><i class="bi bi-search"></i></span>
-        <input id="orders-search" type="search" class="form-control" placeholder="Search orders…" aria-label="Search orders">
+  <main class = "container my-5">
+    <div class = "d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+      <h3 class = "mb-0">Supplier Delivery Portal</h3>
+      <div class = "input-group" style = "max-width: 320px;">
+        <span class = "input-group-text"><i class = "bi bi-search"></i></span>
+        <input id = "orders-search" type = "search" class = "form-control" placeholder = "Search orders…" aria-label = "Search orders">
       </div>
     </div>
 
-    <div class="table-responsive shadow-sm bg-white rounded">
-      <table class="table align-middle mb-0">
-        <thead class="table-light">
+    <div class = "table-responsive shadow-sm bg-white rounded">
+      <table class = "table align-middle mb-0">
+        <thead class = "table-light">
          <tr>
-            <th scope="col" data-sort="id">Order #</th>
-            <th scope="col" data-sort="material">Material</th>
-            <th scope="col" data-sort="supplier">Supplier</th>
-            <th scope="col" data-sort="eta">ETA</th>
-            <th scope="col" data-sort="status">Status</th>
-            <th scope="col">Action</th>
+            <th scope = "col" data-sort = "id">Order #</th>
+            <th scope = "col" data-sort = "material">Material</th>
+            <th scope = "col" data-sort = "supplier">Supplier</th>
+            <th scope = "col" data-sort = "eta">ETA</th>
+            <th scope = "col" data-sort = "status">Status</th>
+            <th scope = "col">Action</th>
          </tr>
         </thead>
-        <tbody id="orders-tbody"></tbody>
+        <tbody id = "orders-tbody"></tbody>
       </table>
     </div>
-    <p class="form-text mt-3">Tip: Use <kbd>Update ETA</kbd> to reschedule; use <kbd>Mark Delivered</kbd> when a truck checks in.</p>
+    <p class = "form-text mt-3"> Tip: Use <kbd> Update ETA </kbd> to reschedule; use <kbd>Mark Delivered</kbd> when a truck checks in.</p>
   </main>
 
-  <footer class="py-4 border-top bg-white">
-    <div class="container small text-center text-muted">© 2025 DeWalt Construction</div>
+  <footer class = "py-4 border-top bg-white">
+    <div class = "container small text-center text-muted">© 2025 DeWalt Construction</div>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="app.js"></script>
+  <script src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src = "app.js"></script>
 </body>
 </html>

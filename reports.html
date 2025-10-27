@@ -1,66 +1,66 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+<html lang = "en" data-bs-theme = "dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Reports & Analytics</title>
-  <meta name="description" content="Live analytics for buildings, inventory, and deliveries." />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet" />
+  <meta charset = "utf-8" />
+  <meta name = ="viewport" content = "width=device-width, initial-scale=1" />
+  <title> Reports & Analytics </title>
+  <meta name = "description" content = "Live analytics for buildings, inventory, and deliveries." />
+  <link href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel = "stylesheet">
+  <link href = "https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel = "stylesheet">
+  <link href = "style.css" rel = "stylesheet" />
 </head>
-<body class="bg-light">
+<body class = "bg-light">
   <!-- NAV -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" aria-label="Main">
-    <div class="container">
-      <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="index.html">
-        <i class="bi bi-box-seam"></i> BFB Supply Portal
+  <nav class = "navbar navbar-expand-lg navbar-dark bg-primary" aria-label = "Main">
+    <div class = "container">
+      <a class = "navbar-brand fw-semibold d-flex align-items-center gap-2" href = "index.html">
+        <i class = "bi bi-box-seam"></i> BFB Supply Portal
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <button class = "navbar-toggler" type = "button" data-bs-toggle = "collapse" data-bs-target = "#nav" aria-controls = "nav" aria-expanded = "false" aria-label = "Toggle navigation">
+        <span class = "navbar-toggler-icon"></span>
       </button>
-      <div id="nav" class="collapse navbar-collapse">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link" href="index.html">Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="supplier.html">Orders</a></li>
-          <li class="nav-item"><a class="nav-link" href="manager.html">Inventory</a></li>
-          <li class="nav-item"><a class="nav-link" href="reports.html">Reports</a></li>
+      <div id = "nav" class = "collapse navbar-collapse">
+        <ul class = "navbar-nav ms-auto">
+          <li class = "nav-item"><a class = "nav-link" href = "index.html">Dashboard</a></li>
+          <li class = "nav-item"><a class = "nav-link" href = "supplier.html">Orders</a></li>
+          <li class = "nav-item"><a class = "nav-link" href = "manager.html">Inventory</a></li>
+          <li class = "nav-item"><a class = "nav-link" href = "reports.html">Reports</a></li>
         </ul>
       </div>
     </div>
   </nav>
 
   <!-- HEADER -->
-  <header class="py-5 bg-secondary-subtle border-bottom">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+  <header class = "py-5 bg-secondary-subtle border-bottom">
+    <div class = "container">
+      <div class = "d-flex flex-wrap align-items-center justify-content-between gap-3">
         <div>
-          <h1 class="h3 mb-1 d-flex align-items-center gap-2">
-            <i class="bi bi-bar-chart-line"></i> Reports & Analytics
+          <h1 class = "h3 mb-1 d-flex align-items-center gap-2">
+            <i class = "bi bi-bar-chart-line"></i> Reports & Analytics
           </h1>
-          <p class="text-muted mb-0">Live view of Buildings, Inventory Health, and Deliveries.</p>
+          <p class = "text-muted mb-0">Live view of Buildings, Inventory Health, and Deliveries.</p>
         </div>
-        <div class="text-muted small">
+        <div class = "text-muted small">
           Data last updated:
-          <span id="last-update-time" class="fw-semibold">—</span>
+          <span id = "last-update-time" class = "fw-semibold">—</span>
         </div>
       </div>
     </div>
   </header>
 
   <!-- MAIN -->
-  <main class="container my-5">
-    <div class="row g-4">
+  <main class = "container my-5">
+    <div class = "row g-4">
       <!-- BUILDINGS -->
-      <div class="col-12 col-lg-4 d-flex">
-        <div class="card shadow-sm h-100 w-100">
-          <div class="card-body">
-            <h6 class="card-title d-flex align-items-center gap-2">
-              <i class="bi bi-buildings"></i> Buildings (Working vs WIP)
+      <div class = "col-12 col-lg-4 d-flex">
+        <div class = "card shadow-sm h-100 w-100">
+          <div class = "card-body">
+            <h6 class = "card-title d-flex align-items-center gap-2">
+              <i class = "bi bi-buildings"></i> Buildings (Working vs WIP)
             </h6>
-            <figure class="mb-0">
-              <canvas id="chart-buildings" height="180" aria-label="Bar chart of building statuses" role="img"></canvas>
-              <figcaption class="form-text mt-2">
+            <figure class = "mb-0">
+              <canvas id = "chart-buildings" height = "180" aria-label = "Bar chart of building statuses" role = "img"></canvas>
+              <figcaption class = "form-text mt-2">
                 Count of active sites by status.
               </figcaption>
             </figure>
@@ -69,15 +69,15 @@
       </div>
 
       <!-- INVENTORY -->
-      <div class="col-12 col-lg-4 d-flex">
-        <div class="card shadow-sm h-100 w-100">
-          <div class="card-body">
-            <h6 class="card-title d-flex align-items-center gap-2">
-              <i class="bi bi-box2"></i> Inventory Health
+      <div class = "col-12 col-lg-4 d-flex">
+        <div class = "card shadow-sm h-100 w-100">
+          <div class = "card-body">
+            <h6 class = "card-title d-flex align-items-center gap-2">
+              <i class = "bi bi-box2"></i> Inventory Health
             </h6>
-            <figure class="mb-0">
-              <canvas id="chart-inventory" height="180" aria-label="Bar chart of inventory health (OK, Low, Reorder)" role="img"></canvas>
-              <figcaption class="form-text mt-2">
+            <figure class = "mb-0">
+              <canvas id = "chart-inventory" height = "180" aria-label = "Bar chart of inventory health (OK, Low, Reorder)" role = "img"></canvas>
+              <figcaption class = "form-text mt-2">
                 Distribution of items by stock level vs threshold.
               </figcaption>
             </figure>
@@ -86,16 +86,16 @@
       </div>
 
       <!-- DELIVERIES -->
-      <div class="col-12 col-lg-4 d-flex">
-        <div class="card shadow-sm h-100 w-100">
-          <div class="card-body">
-            <h6 class="card-title d-flex align-items-center gap-2">
-              <i class="bi bi-truck"></i> Deliveries by Status
+      <div class = "col-12 col-lg-4 d-flex">
+        <div class = "card shadow-sm h-100 w-100">
+          <div class = "card-body">
+            <h6 class = "card-title d-flex align-items-center gap-2">
+              <i class = "bi bi-truck"></i> Deliveries by Status
             </h6>
-            <figure class="mb-0">
-              <canvas id="chart-deliveries" height="180" aria-label="Bar chart of delivery statuses" role="img"></canvas>
-              <figcaption class="form-text mt-2">
-                Orders grouped by Scheduled, In Transit, Delayed, and Delivered.
+            <figure class = "mb-0">
+              <canvas id = "chart-deliveries" height = "180" aria-label = "Bar chart of delivery statuses" role = "img"></canvas>
+              <figcaption class = "form-text mt-2">
+                Orders grouped by Scheduled, In Transit, Delayed and Delivered.
               </figcaption>
             </figure>
           </div>
@@ -104,30 +104,28 @@
     </div>
 
     <!-- NOTE -->
-    <p class="text-muted small mt-3">
+    <p class = "text-muted small mt-3">
       These charts update automatically when orders or inventory change elsewhere in the app.
       If Chart.js fails to load, friendly fallback messages will appear.
     </p>
   </main>
 
   <!-- FOOTER -->
-  <footer class="py-4 border-top bg-white">
-    <div class="container small text-center text-muted">
+  <footer class = "py-4 border-top bg-white">
+    <div class = "container small text-center text-muted">
       © 2025 DeWalt Construction — BFB Supply Chain Management System
     </div>
   </footer>
 
   <!-- SCRIPTS -->
-  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script defer src="app.js"></script>
+  <script defer src = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer src = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script defer src = "app.js"></script>
   <script>
-    // Timestamp for "Data last updated"
     document.addEventListener("DOMContentLoaded", () => {
       const el = document.getElementById("last-update-time");
       const update = () => el && (el.textContent = new Date().toLocaleString());
       update();
-      // Refresh the timestamp periodically so it always feels live
       setInterval(update, 60000);
     });
   </script>
