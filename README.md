@@ -74,22 +74,6 @@ This project forms part of the **BFB321 Web Application Development module** and
 
 All app data is stored in LocalStorage in this structure:
 
-```json
-{
-  "buildings": [
-    { "id": 1, "name": "Site Alpha", "status": "Working" },
-    { "id": 2, "name": "Site Bravo", "status": "WIP" }
-  ],
-  "orders": [
-    { "id": 12, "material": "Cement Bags", "supplier": "BuildPro", "eta": "2025-10-25", "status": "In Transit" },
-    { "id": 13, "material": "Bricks Pallets", "supplier": "BrickWorks", "eta": "2025-10-27", "status": "Scheduled" }
-  ],
-  "inventory": [
-    { "name": "Cement Bags", "qty": 80, "low_threshold": 30 },
-    { "name": "Bricks", "qty": 0, "low_threshold": 50 },
-    { "name": "Paint (20L)", "qty": 14, "low_threshold": 20 }
-  ]
-}
 Data Relationships
 Buildings → Used in the Buildings (Working vs WIP) chart.
 
@@ -267,3 +251,4 @@ erDiagram
 
     buildings ||--o{ orders : "receives"
     orders ||--o{ inventory : "uses"
+
