@@ -53,7 +53,7 @@ This project forms part of the **BFB321 Web Application Development module** and
 
 ---
 
-##  Project Setup
+## Project Setup
 
 ## Using Local Files
 
@@ -101,7 +101,6 @@ If data becomes corrupted or blank, delete the key bfb_supply_data_v1 in your br
 
 ## File Structure
 
-
 ```
 │
 ├── index.html           # Dashboard with KPIs and Add Order Modal
@@ -116,6 +115,7 @@ All pages share a single navigation bar and connect to one data source (app.js).
 ```
 
 ## Usage Flow
+
   1.Add a New Order – Click “+ Add Order” on the dashboard to create an order.
   2.View & Update Orders – In the Supplier page, mark orders as delivered or change ETAs.
   3.Check Inventory – The Inventory page shows stock levels and alerts.
@@ -123,15 +123,15 @@ All pages share a single navigation bar and connect to one data source (app.js).
 
 ## Technologies Used
 
-  - **HTML5** – Structure and markup
-  - **Bootstrap 5.3** – Responsive layout and modals
-  - **CSS3** – Custom styles and theme adjustments
-  - **JavaScript (ES6)** – App logic, data management, dynamic updates
-  - **Chart.js** – Reports and visual analytics
-  - **LocalStorage API** – Browser-based data persistence
-
+- **HTML5** – Structure and markup
+- **Bootstrap 5.3** – Responsive layout and modals
+- **CSS3** – Custom styles and theme adjustments
+- **JavaScript (ES6)** – App logic, data management, dynamic updates
+- **Chart.js** – Reports and visual analytics
+- **LocalStorage API** – Browser-based data persistence
 
 ## Browser Compatibility
+
 The BFB Supply Portal runs on all modern browsers that support HTML5 and CSS3:
 
 - Google Chrome 90+
@@ -139,8 +139,8 @@ The BFB Supply Portal runs on all modern browsers that support HTML5 and CSS3:
 - Mozilla Firefox 88+
 - Apple Safari 14+
 
-
 ## Optional Backend (Future Expansion)
+
 While this version runs purely in the browser, it can easily connect to a small backend (e.g., Flask + SQLite) for long-term data storage.
 
 Example Tables
@@ -150,7 +150,6 @@ suppliers Supplier info and contact details
 materials Material catalog with SKU and category
 inventory Tracks stock quantities and thresholds
 orders Links suppliers, materials, ETAs, and delivery statuses
-
 
 ```mermaid
 
@@ -192,6 +191,7 @@ CREATE TABLE orders (
 ```
 
 ## Reports Integration (SQL → Charts)
+
 Once connected to a backend, the reports can automatically visualize data such as:
 
 Building Overview:
@@ -203,6 +203,7 @@ Deliveries by Status:
 SELECT status, COUNT(*) AS total FROM orders GROUP BY status;
 
 ## Future Enhancements
+
 Add Flask + SQLite backend for real persistence.
 Include user authentication for suppliers and managers.
 Export reports as CSV or PDF.
@@ -211,6 +212,7 @@ Integrate email notifications for delayed deliveries.
 Custom DeWalt Construction theme with brand colors and logo.
 
 ## Entity Relationship Diagram (ERD)
+
 ```mermaid
 Copy code
 erDiagram
@@ -238,6 +240,3 @@ erDiagram
     buildings ||--o{ orders : "receives"
     orders ||--o{ inventory : "uses"
 ```
-
-
-

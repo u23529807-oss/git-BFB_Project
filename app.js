@@ -1,4 +1,5 @@
 // app.js — robust data, migration, rendering (Dashboard, Orders, Inventory, Reports)
+// + Utilities: Reset seed data, Export/Import JSON, Orders search
 (() => {
   const STORE_KEY = "bfb_supply_data_v1";
 
@@ -106,39 +107,52 @@
       });
   }
 
-  // ---------- Supplier ----------
-  function renderSupplier(data) {
+  // ---------- Supplier (with search) ----------
+  function renderSupplier(data, filter = "") {
     const tbody = document.getElementById("orders-tbody");
     if (!tbody) return;
 
-    tbody.innerHTML = "";
-    data.orders
+    const term = filter.trim().toLowerCase();
+    const rows = data.orders
+      .slice()
       .sort((a, b) => a.id - b.id)
-      .forEach(o => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${o.id}</td>
-          <td>${o.material}</td>
-          <td>${o.supplier}</td>
-          <td>${fmt.format(new Date(o.eta))}</td>
-          <td><span class="badge ${clsForStatus(o.status)}">${o.status}</span></td>
-          <td class="text-nowrap">
-            <button class="btn btn-sm btn-outline-success me-2" data-action="deliver" data-id="${o.id}" ${o.status==="Delivered"?"disabled":""}>Mark Delivered</button>
-            <button class="btn btn-sm btn-outline-primary" data-action="eta" data-id="${o.id}">Update ETA</button>
-          </td>`;
-        tbody.appendChild(tr);
+      .filter(o => {
+        if (!term) return true;
+        return (
+          String(o.id).includes(term) ||
+          o.material.toLowerCase().includes(term) ||
+          o.supplier.toLowerCase().includes(term) ||
+          o.status.toLowerCase().includes(term)
+        );
       });
 
-    tbody.addEventListener("click", (e) => {
+    tbody.innerHTML = "";
+    rows.forEach(o => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${o.id}</td>
+        <td>${o.material}</td>
+        <td>${o.supplier}</td>
+        <td>${fmt.format(new Date(o.eta))}</td>
+        <td><span class="badge ${clsForStatus(o.status)}">${o.status}</span></td>
+        <td class="text-nowrap">
+          <button class="btn btn-sm btn-outline-success me-2" data-action="deliver" data-id="${o.id}" ${o.status==="Delivered"?"disabled":""}>Mark Delivered</button>
+          <button class="btn btn-sm btn-outline-primary" data-action="eta" data-id="${o.id}">Update ETA</button>
+        </td>`;
+      tbody.appendChild(tr);
+    });
+
+    tbody.onclick = (e) => {
       const btn = e.target.closest("button[data-action]");
       if (!btn) return;
       const id = Number(btn.dataset.id);
       const action = btn.dataset.action;
-
       if (action === "deliver") {
         data.orders = data.orders.map(o => o.id === id ? { ...o, status: "Delivered", delivered_at: todayISO() } : o);
         saveData(data);
-        renderSupplier(data);
+        renderSupplier(data, document.getElementById("orders-search")?.value || "");
+        renderDashboard(data);
+        renderReports(data);
       }
       if (action === "eta") {
         const current = data.orders.find(o => o.id === id);
@@ -148,9 +162,17 @@
         if (Number.isNaN(d.getTime())) { alert("Invalid date. Please use YYYY-MM-DD."); return; }
         data.orders = data.orders.map(o => o.id === id ? { ...o, eta: next, status: o.status==="Delivered" ? "Delivered" : "Scheduled" } : o);
         saveData(data);
-        renderSupplier(data);
+        renderSupplier(data, document.getElementById("orders-search")?.value || "");
+        renderDashboard(data);
+        renderReports(data);
       }
-    });
+    };
+
+    const search = document.getElementById("orders-search");
+    if (search && !search._wired) {
+      search._wired = true;
+      search.addEventListener("input", () => renderSupplier(loadData(), search.value));
+    }
   }
 
   // ---------- Manager ----------
@@ -200,6 +222,18 @@
     setTimeout(() => ensureChartThen(drawFn, retries - 1), 250);
   }
 
+  // --- Chart.js dark defaults (call once) ---
+function setChartDarkDefaults() {
+  if (!window.Chart) return;
+  // text / ticks / tooltip
+  Chart.defaults.color = '#e5e7eb';           // light text
+  Chart.defaults.borderColor = 'rgba(255,255,255,.12)'; // grid/border lines
+  Chart.defaults.plugins.legend.labels.color = '#cbd5e1';
+  Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(17,24,39,.95)';
+  Chart.defaults.plugins.tooltip.titleColor = '#fff';
+  Chart.defaults.plugins.tooltip.bodyColor = '#e5e7eb';
+}
+
   function renderReports(data) {
     const buildings = Array.isArray(data.buildings) ? data.buildings : [];
     const inventory = Array.isArray(data.inventory) ? data.inventory : [];
@@ -221,6 +255,7 @@
     const dDelivered = orders.filter(o => o.status === "Delivered").length;
 
     ensureChartThen(() => {
+        setChartDarkDefaults();
       const ctxBuild = document.getElementById("chart-buildings");
       if (ctxBuild) {
         charts.buildings?.destroy?.();
@@ -301,6 +336,72 @@
     });
   }
 
+  // ---------- Utilities panel on Dashboard: Reset / Export / Import ----------
+  function wireUtilities() {
+    const btnReset = document.getElementById("btn-reset-data");
+    const btnExport = document.getElementById("btn-export");
+    const inputImport = document.getElementById("input-import");
+
+    if (btnReset && !btnReset._wired) {
+      btnReset._wired = true;
+      btnReset.addEventListener("click", () => {
+        if (!confirm("Reset demo data to defaults? This will overwrite current data.")) return;
+        const seed = structuredClone(defaultData);
+        saveData(seed);
+        // Re-render visible parts
+        renderDashboard(seed);
+        renderReports(seed);
+        // If supplier or manager pages are open, refresh them as well
+        renderSupplier(seed, document.getElementById("orders-search")?.value || "");
+        renderManager(seed);
+      });
+    }
+
+    if (btnExport && !btnExport._wired) {
+      btnExport._wired = true;
+      btnExport.addEventListener("click", () => {
+        const data = loadData();
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `bfb_supply_export_${new Date().toISOString().slice(0,10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    if (inputImport && !inputImport._wired) {
+      inputImport._wired = true;
+      inputImport.addEventListener("change", async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        try {
+          const text = await file.text();
+          const json = JSON.parse(text);
+          // Minimal validation
+          if (!json || !Array.isArray(json.buildings) || !Array.isArray(json.orders) || !Array.isArray(json.inventory)) {
+            alert("Invalid JSON structure. Expect { buildings:[], orders:[], inventory:[] }");
+            return;
+          }
+          saveData(json);
+          renderDashboard(json);
+          renderReports(json);
+          renderSupplier(json, document.getElementById("orders-search")?.value || "");
+          renderManager(json);
+          alert("Import successful.");
+        } catch (err) {
+          console.error(err);
+          alert("Failed to import JSON.");
+        } finally {
+          e.target.value = "";
+        }
+      });
+    }
+  }
+
   // ---------- Boot ----------
   document.addEventListener("DOMContentLoaded", () => {
     const data = loadData();
@@ -310,8 +411,9 @@
     renderManager(data);
     renderReports(data);
     wireAddOrder(data);
+    wireUtilities();
 
-    // Light polling for cross-tab updates
+    // Light polling for cross-tab updates (dashboard & reports)
     if (document.getElementById("kpi-orders") || document.getElementById("chart-deliveries")) {
       setInterval(() => {
         const fresh = loadData();
